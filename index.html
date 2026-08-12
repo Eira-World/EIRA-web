@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EIRA — League Coach &amp; Stats</title>
+<meta name="description" content="A free desktop assistant for League of Legends: runes in champion select, item advice in game, and a real review afterwards."/>
+<!--
+  Die Produktseite.
+
+  Sie hat genau einen Zweck: Riot ruft beim Antrag auf einen Production-Key
+  die angegebene URL auf und will sehen, was das Produkt ist. Eine leere Seite
+  oder ein Repository ohne Erklärung führt zur Ablehnung.
+
+  Deshalb steht hier, was EIRA tut, woher jede Zahl kommt und was sie
+  ausdrücklich NICHT tut. Alles davon muss stimmen — Riot kann es prüfen, und
+  eine Seite, die mehr verspricht als der Prototyp kann, ist der schnellste Weg
+  zu einer Ablehnung.
+
+  Englisch, weil das Entwicklerportal und die Prüfer englisch sind.
+
+  Ohne externe Dateien: keine Schriften, keine Skripte, keine CDNs. Eine Seite,
+  die von fremden Servern nachlädt, ist von deren Verfügbarkeit abhängig — und
+  genau dann kaputt, wenn sie geprüft wird.
+-->
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --flaeche: #0e1524;
+    --flaeche2: #121b2e;
+    --rand: #1e2b44;
+    --text: #eaf2ff;
+    --text2: #9fb3c8;
+    --text3: #6b8199;
+    --akzent: #4ee1ff;
+    --gold: #f0b232;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+  .huelle { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  header {
+    padding: 72px 0 56px;
+    background:
+      radial-gradient(900px 400px at 15% -10%, rgba(78,225,255,.13), transparent 65%),
+      var(--bg);
+    border-bottom: 1px solid var(--rand);
+  }
+  .marke {
+    display: inline-flex; align-items: center; gap: 12px; margin-bottom: 26px;
+  }
+  .marke .zeichen {
+    width: 46px; height: 46px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--akzent), #7d5cff);
+    display: grid; place-items: center;
+    font-weight: 800; font-size: 22px; color: #06121c;
+  }
+  .marke .wort { font-weight: 800; letter-spacing: .22em; font-size: 15px; }
+  h1 { font-size: 42px; line-height: 1.15; margin: 0 0 16px; font-weight: 800; }
+  h1 span { color: var(--akzent); }
+  .unter { font-size: 19px; color: var(--text2); max-width: 640px; margin: 0 0 26px; }
+  .abzeichen {
+    display: inline-block; padding: 5px 13px; border-radius: 999px;
+    background: rgba(240,178,50,.12); border: 1px solid rgba(240,178,50,.34);
+    color: var(--gold); font-size: 12.5px; font-weight: 700;
+    letter-spacing: .05em; text-transform: uppercase;
+  }
+
+  section { padding: 52px 0; border-bottom: 1px solid var(--rand); }
+  h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: .13em;
+    color: var(--text3); margin: 0 0 22px; font-weight: 700;
+  }
+  h3 { font-size: 18px; margin: 0 0 8px; font-weight: 700; }
+  p { margin: 0 0 16px; color: var(--text2); }
+  p.hell { color: var(--text); }
+
+  .raster { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 700px) { .raster { grid-template-columns: 1fr; } h1 { font-size: 31px; } }
+  .karte {
+    background: var(--flaeche); border: 1px solid var(--rand);
+    border-radius: 14px; padding: 22px;
+  }
+  .karte p { margin: 0; font-size: 14.5px; }
+  .karte .phase {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--akzent); font-weight: 700; margin-bottom: 6px;
+  }
+
+  ul { margin: 0 0 16px; padding-left: 20px; color: var(--text2); }
+  li { margin-bottom: 9px; }
+  li strong { color: var(--text); }
+  code {
+    background: var(--flaeche2); border: 1px solid var(--rand);
+    border-radius: 5px; padding: 1px 6px; font-size: 13.5px;
+    color: var(--akzent); font-family: Consolas, "SF Mono", monospace;
+  }
+
+  .zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+  @media (max-width: 700px) { .zwei { grid-template-columns: 1fr; gap: 22px; } }
+
+  .kasten {
+    background: var(--flaeche2); border-left: 3px solid var(--akzent);
+    border-radius: 0 10px 10px 0; padding: 18px 22px; margin: 0 0 18px;
+  }
+  .kasten p:last-child { margin-bottom: 0; }
+
+  .status { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+  .status span {
+    font-size: 12.5px; padding: 5px 12px; border-radius: 999px;
+    background: var(--flaeche2); border: 1px solid var(--rand); color: var(--text2);
+  }
+  .status span b { color: var(--text); font-weight: 700; }
+
+  a { color: var(--akzent); }
+  footer { padding: 40px 0 64px; color: var(--text3); font-size: 13px; }
+  footer p { color: var(--text3); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="huelle">
+    <div class="marke">
+      <div class="zeichen">E</div>
+      <div class="wort">EIRA</div>
+    </div>
+    <h1>A coach that watches <span>your</span> game.</h1>
+    <p class="unter">
+      EIRA is a free desktop assistant for League of Legends. It suggests runes
+      before the game, tells you what to build during it, and reviews what
+      actually happened afterwards — from your own matches, not from averages.
+    </p>
+    <span class="abzeichen">Working prototype · in development</span>
+  </div>
+</header>
+
+<section>
+  <div class="huelle">
+    <h2>What it does</h2>
+    <div class="raster">
+      <div class="karte">
+        <div class="phase">Champion select</div>
+        <h3>Runes and summoners</h3>
+        <p>
+          EIRA reads the lobby, works out the matchup and the enemy team's
+          damage profile, and proposes a rune page for the champion
+          <em>and the position</em> you are on — a support does not get the
+          same page as a mid laner. The page is written to the client only
+          after you accept it, and it never overwrites a page you made
+          yourself.
+        </p>
+      </div>
+      <div class="karte">
+        <div class="phase">In game</div>
+        <h3>What to build next</h3>
+        <p>
+          A small overlay stays on top of the game. It reads Riot's official
+          Live Client Data API and names the next item based on what the enemy
+          team has actually bought and who is ahead — so a Smolder does not get
+          told to build tank items.
+        </p>
+      </div>
+      <div class="karte">
+        <div class="phase">After the game</div>
+        <h3>A real review</h3>
+        <p>
+          The match timeline is used to reconstruct the game: lane phase, gold
+          curves, where the deaths happened, which objectives were traded.
+          Out of that come specific notes — the death at 14:20 on the wrong
+          side of the river, not "play safer".
+        </p>
+      </div>
+      <div class="karte">
+        <div class="phase">Between games</div>
+        <h3>Numbers, and where they came from</h3>
+        <p>
+          Win rates per champion, matchup, rune page and item, counted from
+          ranked matches EIRA samples itself. Every figure carries its sample
+          size, and a figure with too few games is shown plainly instead of
+          being dressed up as a finding.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="huelle">
+    <h2>Where the data comes from</h2>
+    <div class="kasten">
+      <p class="hell">
+        Nothing on this page is scraped from op.gg, u.gg or any other site.
+        Their numbers belong to them.
+      </p>
+    </div>
+    <div class="zwei">
+      <div>
+        <h3>Riot Games API</h3>
+        <ul>
+          <li><strong>ACCOUNT-V1, SUMMONER-V4</strong> — resolving a Riot ID</li>
+          <li><strong>LEAGUE-V4</strong> — rank, and the ranked ladder used as a sample</li>
+          <li><strong>MATCH-V5</strong> — matches and match timelines</li>
+          <li><strong>SPECTATOR-V5</strong> — the game currently running</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Local, on your machine</h3>
+        <ul>
+          <li><strong>Live Client Data API</strong> — the running match, official and read-only</li>
+          <li><strong>LCU</strong> — champion select and rune pages</li>
+          <li><strong>Data Dragon / Community Dragon</strong> — champions, items, runes, icons</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="huelle">
+    <h2>What it will never do</h2>
+    <ul>
+      <li>No <strong>gameplay automation</strong> of any kind. EIRA does not press keys and does not move your champion.</li>
+      <li>No <strong>reading or modifying game memory</strong>. Everything in-game comes from Riot's own local API.</li>
+      <li>Nothing shown during a match that <strong>you cannot already see</strong> on your own screen.</li>
+      <li>No <strong>account data leaving your machine</strong> beyond the API calls themselves. The API key is stored encrypted locally, never logged.</li>
+      <li>No ads, no paid features, <strong>no cost</strong>.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="huelle">
+    <h2>Status</h2>
+    <p>
+      EIRA runs on Windows and is in active development. League of Legends is
+      the game it covers today. Teamfight Tactics is being built now, and
+      VALORANT is planned; each game is registered separately with Riot, as the
+      developer portal requires.
+    </p>
+    <div class="status">
+      <span><b>League of Legends</b> — working</span>
+      <span><b>Teamfight Tactics</b> — in progress</span>
+      <span><b>VALORANT</b> — planned</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="huelle">
+    <h2>Community</h2>
+    <p>
+      A Discord for EIRA's users is being set up — for release notes, bug
+      reports and feature requests.
+    </p>
+    <!-- VOR DEM RIOT-ANTRAG AUSTAUSCHEN: echte Dauereinladung eintragen.
+         Ein toter Link auf der Produktseite ist schlechter als kein Link. -->
+    <p><em>Invite link to follow.</em></p>
+  </div>
+</section>
+
+<footer>
+  <div class="huelle">
+    <p>
+      EIRA isn't endorsed by Riot Games and doesn't reflect the views or
+      opinions of Riot Games or anyone officially involved in producing or
+      managing Riot Games properties. Riot Games, and all associated
+      properties, are trademarks or registered trademarks of Riot Games, Inc.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
