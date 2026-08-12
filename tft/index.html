@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>EIRA — TFT Coach &amp; Stats</title>
+<meta name="description" content="The Teamfight Tactics side of EIRA: units, traits, items and augments, plus average placements counted from ranked matches."/>
+<!--
+  Die Produktseite für die TFT-Anmeldung.
+
+  Warum eine eigene Seite und nicht ein Abschnitt auf der Hauptseite: Riot
+  verifiziert jede Anwendung über eine Datei `riot.txt` unter der angegebenen
+  Produkt-URL — mit einem eigenen Code je Anwendung. Zwei Anwendungen auf
+  derselben URL bedeuten zwei Codes in derselben Datei, und einer von beiden
+  wäre falsch.
+
+  Also: League unter /EIRA-web/, TFT unter /EIRA-web/tft/, jede mit ihrer
+  eigenen riot.txt. Beide bleiben dauerhaft gültig.
+
+  Was hier NICHT steht: dass EIRA während einer TFT-Partie zusieht. Riot
+  stellt dafür keine Live-Schnittstelle bereit. Eine Produktseite, die mehr
+  verspricht als die Schnittstellen hergeben, fällt bei der Prüfung auf.
+-->
+<style>
+  :root {
+    --bg: #0a0f1a; --flaeche: #0e1524; --flaeche2: #121b2e; --rand: #1e2b44;
+    --text: #eaf2ff; --text2: #9fb3c8; --text3: #6b8199;
+    --akzent: #4ee1ff; --gold: #f0b232;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    line-height: 1.6; font-size: 16px;
+  }
+  .huelle { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+  header {
+    padding: 72px 0 56px;
+    background:
+      radial-gradient(900px 400px at 15% -10%, rgba(240,178,50,.13), transparent 65%),
+      var(--bg);
+    border-bottom: 1px solid var(--rand);
+  }
+  .marke { display: inline-flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+  .marke .zeichen {
+    width: 46px; height: 46px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--gold), #ff7d5c);
+    display: grid; place-items: center; font-weight: 800; font-size: 22px; color: #1c1206;
+  }
+  .marke .wort { font-weight: 800; letter-spacing: .22em; font-size: 15px; }
+  h1 { font-size: 40px; line-height: 1.15; margin: 0 0 16px; font-weight: 800; }
+  h1 span { color: var(--gold); }
+  .unter { font-size: 19px; color: var(--text2); max-width: 640px; margin: 0 0 26px; }
+  .abzeichen {
+    display: inline-block; padding: 5px 13px; border-radius: 999px;
+    background: rgba(240,178,50,.12); border: 1px solid rgba(240,178,50,.34);
+    color: var(--gold); font-size: 12.5px; font-weight: 700;
+    letter-spacing: .05em; text-transform: uppercase;
+  }
+  section { padding: 52px 0; border-bottom: 1px solid var(--rand); }
+  h2 {
+    font-size: 13px; text-transform: uppercase; letter-spacing: .13em;
+    color: var(--text3); margin: 0 0 22px; font-weight: 700;
+  }
+  h3 { font-size: 18px; margin: 0 0 8px; font-weight: 700; }
+  p { margin: 0 0 16px; color: var(--text2); }
+  .raster { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  @media (max-width: 700px) { .raster { grid-template-columns: 1fr; } h1 { font-size: 30px; } }
+  .karte {
+    background: var(--flaeche); border: 1px solid var(--rand);
+    border-radius: 14px; padding: 22px;
+  }
+  .karte p { margin: 0; font-size: 14.5px; }
+  ul { margin: 0 0 16px; padding-left: 20px; color: var(--text2); }
+  li { margin-bottom: 9px; }
+  li strong { color: var(--text); }
+  .kasten {
+    background: var(--flaeche2); border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0; padding: 18px 22px; margin: 0 0 18px;
+  }
+  .kasten p:last-child { margin-bottom: 0; color: var(--text); }
+  a { color: var(--akzent); }
+  footer { padding: 40px 0 64px; }
+  footer p { color: var(--text3); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="huelle">
+    <div class="marke">
+      <div class="zeichen">E</div>
+      <div class="wort">EIRA · TFT</div>
+    </div>
+    <h1>Everything you need <span>between two rounds</span>.</h1>
+    <p class="unter">
+      The Teamfight Tactics side of EIRA: what a unit brings, who else has that
+      trait, what two components build into — and what actually places well,
+      counted from real ranked games.
+    </p>
+    <span class="abzeichen">In development</span>
+  </div>
+</header>
+
+<section>
+  <div class="huelle">
+    <h2>What it answers</h2>
+    <div class="raster">
+      <div class="karte">
+        <h3>Units</h3>
+        <p>
+          Every unit of the current set, grouped by cost, with its traits and
+          ability. The order TFT players actually think in.
+        </p>
+      </div>
+      <div class="karte">
+        <h3>Traits</h3>
+        <p>
+          Who else carries this trait, and what happens at two, four, six.
+          The question you have with a unit already in your hand.
+        </p>
+      </div>
+      <div class="karte">
+        <h3>Items</h3>
+        <p>
+          A grid of the nine components in row and column, with the result in
+          every cell — the whole combination table at once, instead of reading
+          recipes one by one.
+        </p>
+      </div>
+      <div class="karte">
+        <h3>Augments</h3>
+        <p>
+          What the three things you were just offered actually do, while the
+          timer runs.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="huelle">
+    <h2>The numbers</h2>
+    <div class="kasten">
+      <p>
+        Placements, not win rates. In TFT, finishing second is not a loss —
+        average placement is what the game is actually scored on.
+      </p>
+    </div>
+    <p>
+      Average placement per unit, trait, item and augment, counted from ranked
+      matches EIRA samples itself:
+      <strong>TFT-LEAGUE-V1 → PUUID → TFT-MATCH-V1</strong>. Nothing is scraped
+      from other statistics sites. Every figure carries its sample size, and one
+      with too small a sample is shown plainly instead of being dressed up as a
+      finding.
+    </p>
+    <p>
+      Set data — units, traits, items, augments and icons — comes from Data
+      Dragon and Community Dragon.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="huelle">
+    <h2>What it does not do</h2>
+    <p>
+      Riot provides no live interface for Teamfight Tactics. The board, the
+      items on it, gold and round number are not available to any third-party
+      tool, and EIRA does not pretend otherwise — the view states plainly what
+      it cannot see.
+    </p>
+    <ul>
+      <li>No <strong>gameplay automation</strong> of any kind.</li>
+      <li>No <strong>reading or modifying game memory</strong>.</li>
+      <li>No <strong>screen capture</strong> of the board.</li>
+      <li>The API key is stored <strong>encrypted on the machine</strong>, never logged.</li>
+      <li>Free. No ads, no paid features.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="huelle">
+    <h2>Elsewhere</h2>
+    <p>
+      The League of Legends side of EIRA is registered separately and described
+      at <a href="../">eira-world.github.io/EIRA-web</a>.
+    </p>
+    <p>
+      Bug reports and questions:
+      <a href="https://github.com/Eira-World/EIRA-web/issues">github.com/Eira-World/EIRA-web/issues</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="huelle">
+    <p>
+      EIRA isn't endorsed by Riot Games and doesn't reflect the views or
+      opinions of Riot Games or anyone officially involved in producing or
+      managing Riot Games properties. Riot Games, and all associated
+      properties, are trademarks or registered trademarks of Riot Games, Inc.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
